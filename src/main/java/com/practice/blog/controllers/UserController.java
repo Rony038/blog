@@ -4,7 +4,6 @@ import com.practice.blog.dtos.UserRequest;
 import com.practice.blog.dtos.UserResponse;
 import com.practice.blog.services.UserService;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,6 @@ public class UserController {
                                                    @RequestBody UserRequest userRequest){
         return new ResponseEntity<>(userService.updateUser(id, userRequest), HttpStatus.CREATED);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable long id){

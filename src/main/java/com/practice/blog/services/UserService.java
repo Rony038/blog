@@ -23,7 +23,6 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(userConverter::convertToResponse)
                 .toList();
-
     }
 
     public UserResponse getUserById(long id) {

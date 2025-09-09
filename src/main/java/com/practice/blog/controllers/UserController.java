@@ -34,7 +34,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable long id,
-                                                   @RequestBody UserRequest userRequest){
+                                                   @Valid @RequestBody UserRequest userRequest){
         return new ResponseEntity<>(userService.updateUser(id, userRequest), HttpStatus.CREATED);
     }
 

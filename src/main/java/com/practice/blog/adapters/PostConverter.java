@@ -3,15 +3,20 @@ package com.practice.blog.adapters;
 import com.practice.blog.dtos.PostRequest;
 import com.practice.blog.dtos.PostResponse;
 import com.practice.blog.entities.PostEntity;
+import com.practice.blog.entities.UserEntity;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Service
 public class PostConverter {
-    public PostEntity convertToEntity(PostRequest request){
+    public PostEntity convertToEntity(PostRequest request, UserEntity userEntity){
         PostEntity entity = new PostEntity();
 
         entity.setTitle(request.getTitle());
         entity.setContent(request.getContent());
+        entity.setUser(userEntity);
         return entity;
     }
 
@@ -25,5 +30,13 @@ public class PostConverter {
         response.setUserName(entity.getUser().getUserName());
 
         return response;
+    }
+
+    public PostEntity converterForUpdate(PostRequest postRequest, PostEntity postEntity, UserEntity userEntity) {
+        postEntity.setTitle(Optional.ofNullable(postRequest.getTitle()).orElseGet(postEntity::getTitle));
+        postEntity.setContent(Optional.ofNullable(postRequest.getContent()).orElseGet(postEntity::getContent));
+        postEntity.setUser(userEntity);
+
+        return postEntity;
     }
 }

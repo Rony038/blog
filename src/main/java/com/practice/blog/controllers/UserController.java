@@ -3,6 +3,7 @@ package com.practice.blog.controllers;
 import com.practice.blog.dtos.UserRequest;
 import com.practice.blog.dtos.UserResponse;
 import com.practice.blog.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/blog/api/users")
+@Tag(name = "User APIs", description = "Create, Read, Update & Delete Users")
 public class UserController {
     @Autowired
     private UserService userService;

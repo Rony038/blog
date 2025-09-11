@@ -3,6 +3,7 @@ package com.practice.blog.controllers;
 import com.practice.blog.dtos.PostRequest;
 import com.practice.blog.dtos.PostResponse;
 import com.practice.blog.services.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin("**")
 @RequestMapping("/blog/api/posts")
+@Tag(name = "Post APIs", description = "Create, Read, Update & Delete Posts")
 public class PostController {
     @Autowired
     private PostService postService;

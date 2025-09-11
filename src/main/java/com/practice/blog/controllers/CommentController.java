@@ -3,9 +3,9 @@ package com.practice.blog.controllers;
 import com.practice.blog.dtos.CommentRequest;
 import com.practice.blog.dtos.CommentResponse;
 import com.practice.blog.services.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/blog/api/comments")
+@Tag(name = "Comment APIs", description = "Create, Read, Update & Delete Comments")
 public class CommentController {
     @Autowired
     private CommentService commentService;

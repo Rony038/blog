@@ -29,7 +29,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@Valid @RequestBody UserRequest userRequest){
         return new ResponseEntity<>(userService.registerUser(userRequest), HttpStatus.CREATED);
     }
@@ -44,6 +44,12 @@ public class UserController {
     public ResponseEntity<Void> deleteById(@PathVariable long id){
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> userLogin(@RequestBody UserRequest userRequest){
+
+        return new ResponseEntity<>(userService.userLogin(userRequest), HttpStatus.OK);
     }
 
 }

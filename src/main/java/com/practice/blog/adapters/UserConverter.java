@@ -5,6 +5,7 @@ import com.practice.blog.dtos.UserRequest;
 import com.practice.blog.dtos.UserResponse;
 import com.practice.blog.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -16,12 +17,15 @@ public class UserConverter {
     @Autowired
     private PostConverter postConverter;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public UserEntity convertToEntity(UserRequest request){
         UserEntity entity = new UserEntity();
 
         entity.setUserName(request.getUserName());
         entity.setEmail(request.getEmail());
-        entity.setPassword(request.getPassword());
+        entity.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         return entity;
     }
     public UserResponse convertToResponse(UserEntity entity){

@@ -7,9 +7,14 @@ import com.practice.blog.entities.UserEntity;
 import com.practice.blog.exceptions.ResourceNotFoundException;
 import com.practice.blog.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -18,6 +23,9 @@ public class UserService {
 
     @Autowired
     private UserConverter userConverter;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public List<UserResponse> getAllUsers(){
         return userRepository.findAll().stream()
@@ -56,6 +64,17 @@ public class UserService {
         }else{
             throw new IllegalArgumentException("User is not found with id: " + id);
         }
+    }
+
+    public String userLogin(UserRequest userRequest){
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userRequest.getUserName(), userRequest.getPassword())
+        );
+        //UserEntity byUserName = userRepository.findByUserName(userRequest.getUserName());
+        if(authenticate.isAuthenticated()){
+            return "Login success";
+        }else
+            return "Login failed.";
     }
 
 }

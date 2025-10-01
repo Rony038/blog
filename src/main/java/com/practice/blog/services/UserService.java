@@ -6,15 +6,14 @@ import com.practice.blog.dtos.UserResponse;
 import com.practice.blog.entities.UserEntity;
 import com.practice.blog.exceptions.ResourceNotFoundException;
 import com.practice.blog.repositories.UserRepository;
+import com.practice.blog.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -23,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserConverter userConverter;
+
+    @Autowired
+    private JwtTokenUtil jwtService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -70,9 +72,8 @@ public class UserService {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userRequest.getUserName(), userRequest.getPassword())
         );
-        //UserEntity byUserName = userRepository.findByUserName(userRequest.getUserName());
-        if(authenticate.isAuthenticated()){
-            return "Login success";
+        if(authenticate.isAuthenticated()                                                                     ){
+            return jwtService.generateToken(userRequest);
         }else
             return "Login failed.";
     }

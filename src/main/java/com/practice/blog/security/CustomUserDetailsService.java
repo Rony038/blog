@@ -1,11 +1,9 @@
-package com.practice.blog.services;
+package com.practice.blog.security;
 
 import com.practice.blog.dtos.CustomUserDetails;
 import com.practice.blog.entities.UserEntity;
 import com.practice.blog.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

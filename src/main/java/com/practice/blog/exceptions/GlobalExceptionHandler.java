@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,19 +46,19 @@ public class GlobalExceptionHandler {
                 "Database constraint violated. " + rootCause, null);
     }
 
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex) {
-//        log.warn("Access denied: {}", ex.getMessage());
-//        return buildResponse(HttpStatus.FORBIDDEN, "Forbidden",
-//                "You do not have permission to perform this action.", null);
-//    }
-//
-//    @ExceptionHandler({ BadCredentialsException.class, UsernameNotFoundException.class })
-//    public ResponseEntity<ApiError> handleAuthenticationErrors(Exception ex) {
-//        log.warn("Authentication failed: {}", ex.getMessage());
-//        return buildResponse(HttpStatus.UNAUTHORIZED, "Unauthorized",
-//                "Invalid username or password.", null);
-//    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex) {
+        log.warn("Access denied: {}", ex.getMessage());
+        return buildResponse(HttpStatus.FORBIDDEN, "Forbidden",
+                "You do not have permission to perform this action.", null);
+    }
+
+    @ExceptionHandler({ BadCredentialsException.class, UsernameNotFoundException.class })
+    public ResponseEntity<ApiError> handleAuthenticationErrors(Exception ex) {
+        log.warn("Authentication failed: {}", ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, "Unauthorized",
+                "Invalid username or password.", null);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGlobalException(Exception ex) {

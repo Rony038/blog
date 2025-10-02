@@ -49,7 +49,7 @@ public class UserConverter {
     public UserEntity converterForUpdate(UserRequest userRequest, UserEntity userEntity){
         userEntity.setUserName(Optional.ofNullable(userRequest.getUserName()).orElseGet(userEntity::getUserName));
         userEntity.setEmail(Optional.ofNullable(userRequest.getEmail()).orElseGet(userEntity::getEmail));
-        userEntity.setPassword(Optional.ofNullable(userRequest.getPassword()).orElseGet(userEntity::getPassword));
+        userEntity.setPassword(Optional.ofNullable(bCryptPasswordEncoder.encode(userRequest.getPassword())).orElseGet(userEntity::getPassword));
 
         return userEntity;
     }

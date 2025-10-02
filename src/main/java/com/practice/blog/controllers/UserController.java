@@ -52,4 +52,10 @@ public class UserController {
         return new ResponseEntity<>(userService.userLogin(userRequest), HttpStatus.OK);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        // For JWT stateless logout, nothing to do server-side
+        return ResponseEntity.ok("Logged out successfully. Please remove token on client side.");
+    }
+
 }

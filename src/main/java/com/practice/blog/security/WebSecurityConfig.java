@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
                         .requestMatchers("/blog/api/users/register",
-                                "/blog/api/users/login").permitAll()
+                                "/blog/api/users/login", "/blog/api/users/logout").permitAll()
                         .anyRequest().authenticated())
                  .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                  .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

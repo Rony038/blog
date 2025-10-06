@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFoundException ex) {
-        log.warn("Resource not found: {}", ex.getMessage());
+        //log.warn("Resource not found: {}", ex.getMessage());
         return buildResponse(HttpStatus.NOT_FOUND, "Not Found", ex.getMessage(), null);
     }
 
@@ -33,14 +33,14 @@ public class GlobalExceptionHandler {
                 errors.put(error.getField(), error.getDefaultMessage())
         );
 
-        log.warn("Validation failed: {}", errors);
+        //log.warn("Validation failed: {}", errors);
         return buildResponse(HttpStatus.BAD_REQUEST, "Validation Error", "Invalid request parameters", errors);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
         String rootCause = extractRootCause(ex);
-        log.error("Data integrity violation: {}", rootCause, ex);
+        //log.error("Data integrity violation: {}", rootCause, ex);
 
         return buildResponse(HttpStatus.CONFLICT, "Data Integrity Violation",
                 "Database constraint violated. " + rootCause, null);
@@ -48,21 +48,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex) {
-        log.warn("Access denied: {}", ex.getMessage());
+        //log.warn("Access denied: {}", ex.getMessage());
         return buildResponse(HttpStatus.FORBIDDEN, "Forbidden",
                 "You do not have permission to perform this action.", null);
     }
 
     @ExceptionHandler({ BadCredentialsException.class, UsernameNotFoundException.class })
     public ResponseEntity<ApiError> handleAuthenticationErrors(Exception ex) {
-        log.warn("Authentication failed: {}", ex.getMessage());
+        //log.warn("Authentication failed: {}", ex.getMessage());
         return buildResponse(HttpStatus.UNAUTHORIZED, "Unauthorized",
                 "Invalid username or password.", null);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGlobalException(Exception ex) {
-        log.error("Unexpected error: {}", ex.getMessage(), ex);
+        //log.error("Unexpected error: {}", ex.getMessage(), ex);
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error",
                 ex.getMessage(), null);
     }
